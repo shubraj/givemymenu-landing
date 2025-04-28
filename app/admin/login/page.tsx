@@ -115,6 +115,7 @@ export default function AdminLogin() {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     className="w-full pl-10 px-3 py-2.5 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#eb8036] dark:bg-gray-800 dark:text-white"
+                    placeholder="Enter your username"
                     required
                   />
                 </div>
@@ -137,6 +138,7 @@ export default function AdminLogin() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full pl-10 px-3 py-2.5 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#eb8036] dark:bg-gray-800 dark:text-white"
+                    placeholder="Enter your password"
                     required
                   />
                 </div>
