@@ -27,6 +27,8 @@ export async function POST(request: Request) {
     try {
       // Add subscriber to database
       const result = await addSubscriber(email);
+      // Only count as new subscriber if affectedRows > 0
+      // MySQL returns affectedRows=0 for duplicate emails due to ON DUPLICATE KEY UPDATE
       isNewSubscriber = !!result && 'affectedRows' in result && result.affectedRows > 0;
     } catch (error) {
       // Check if error is a duplicate entry
@@ -41,11 +43,14 @@ export async function POST(request: Request) {
           console.log('Database unavailable, storing email in memory:', email);
           console.log('Current emails in memory:', memoryEmails);
           isNewSubscriber = true;
+        } else {
+          // Email already exists in memory
+          isNewSubscriber = false;
         }
       }
     }
     
-    // Send welcome email to new subscribers
+    // Send welcome email to new subscribers ONLY
     if (isNewSubscriber) {
       // Send welcome email asynchronously (non-blocking)
       sendWelcomeEmail(email).catch(err => 
@@ -58,16 +63,20 @@ export async function POST(request: Request) {
       );
       
       console.log('Emails sent for new subscriber:', email);
+    } else {
+      console.log('Skipping email notifications for existing subscriber:', email);
     }
     
     // Return success response
     return NextResponse.json(
       { 
         success: true, 
-        message: 'Thank you! You\'re on the early access list.',
+        message: isNewSubscriber 
+          ? 'Thank you! You\'re on the early access list.' 
+          : 'You are already subscribed to our list.',
         isNewSubscriber
       },
-      { status: 201 }
+      { status: isNewSubscriber ? 201 : 200 }
     );
   } catch (error) {
     console.error('Subscription error:', error);

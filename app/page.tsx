@@ -61,15 +61,15 @@ export default function Home() {
       // Success toast
       setToast({
         visible: true,
-        message: data.message || 'Thank you! You&apos;re on the early access list.',
-        type: 'success'
+        message: data.message || 'Thank you! You\'re on the early access list.',
+        type: data.isNewSubscriber ? 'success' : 'info'
       });
       
       // Reset form (but keep email for display purposes)
       // Don't hide success message since we want it to persist
       
     } catch (err) {
-      console.error('Error logging out:', err);
+      console.error('Error submitting form:', err);
       setToast({
         visible: true,
         message: 'Something went wrong. Please try again.',
