@@ -21,6 +21,8 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: ${{ secrets.SERVER_PORT }}
         script: |
+          source ~/.bashrc
+          # Navigate to your app's path and deploy
           cd ${{ secrets.SERVER_PATH }}
           git pull origin main
           npm install
