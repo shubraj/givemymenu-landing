@@ -26,10 +26,6 @@ jobs:
           [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
           nvm use 22.15.0
 
-          # Now check if npm is available
-          which npm
-          which pm2
-
           # Navigate to your app's path and deploy
           cd ${{ secrets.SERVER_PATH }}
           git pull origin main
