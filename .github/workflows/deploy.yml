@@ -21,7 +21,7 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: ${{ secrets.SERVER_PORT }}
         script: |
-          cd /home/givemymenu/htdocs/givemymenu.com
+          cd ${{ secrets.SERVER_PATH }}
           git pull origin main
           npm install
           npm run build
