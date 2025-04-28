@@ -1,0 +1,45 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- QR Code Inspired Design -->
+  <rect width="200" height="200" rx="10" fill="white"/>
+  
+  <!-- QR Code Pattern -->
+  <g transform="translate(25, 25)">
+    <!-- Top Left Corner -->
+    <rect x="0" y="0" width="40" height="40" rx="5" fill="#eb8036"/>
+    <rect x="10" y="10" width="20" height="20" rx="3" fill="#fff"/>
+    
+    <!-- Top Right Corner -->
+    <rect x="110" y="0" width="40" height="40" rx="5" fill="#eb8036"/>
+    <rect x="120" y="10" width="20" height="20" rx="3" fill="#fff"/>
+    
+    <!-- Bottom Left Corner -->
+    <rect x="0" y="110" width="40" height="40" rx="5" fill="#eb8036"/>
+    <rect x="10" y="120" width="20" height="20" rx="3" fill="#fff"/>
+    
+    <!-- Center Menu Icon -->
+    <rect x="55" y="55" width="40" height="40" rx="5" fill="#eb8036"/>
+    <rect x="65" y="65" width="20" height="3" rx="1" fill="#fff"/>
+    <rect x="65" y="72" width="20" height="3" rx="1" fill="#fff"/>
+    <rect x="65" y="79" width="20" height="3" rx="1" fill="#fff"/>
+    
+    <!-- QR Code Bits -->
+    <rect x="50" y="15" width="10" height="10" rx="2" fill="#eb8036"/>
+    <rect x="70" y="15" width="10" height="10" rx="2" fill="#eb8036"/>
+    <rect x="90" y="15" width="10" height="10" rx="2" fill="#eb8036"/>
+    
+    <rect x="15" y="50" width="10" height="10" rx="2" fill="#eb8036"/>
+    <rect x="15" y="70" width="10" height="10" rx="2" fill="#eb8036"/>
+    <rect x="15" y="90" width="10" height="10" rx="2" fill="#eb8036"/>
+    
+    <rect x="125" y="50" width="10" height="10" rx="2" fill="#eb8036"/>
+    <rect x="125" y="70" width="10" height="10" rx="2" fill="#eb8036"/>
+    <rect x="125" y="90" width="10" height="10" rx="2" fill="#eb8036"/>
+    
+    <rect x="50" y="125" width="10" height="10" rx="2" fill="#eb8036"/>
+    <rect x="70" y="125" width="10" height="10" rx="2" fill="#eb8036"/>
+    <rect x="90" y="125" width="10" height="10" rx="2" fill="#eb8036"/>
+  </g>
+  
+  <!-- Text: givemymenu -->
+  <text x="100" y="185" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#eb8036">givemymenu</text>
+</svg>
