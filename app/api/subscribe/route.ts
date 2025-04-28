@@ -6,7 +6,7 @@ import { sendWelcomeEmail, sendAdminNotification } from '@/lib/email';
 import '@/lib/setup';
 
 // In-memory storage for emails when database isn't available
-let memoryEmails: string[] = [];
+const memoryEmails: string[] = [];
 
 export async function POST(request: Request) {
   try {

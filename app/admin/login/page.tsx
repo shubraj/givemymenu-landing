@@ -42,8 +42,8 @@ export default function AdminLogin() {
         router.push('/admin/dashboard');
       }, 1500);
       
-    } catch (err: any) {
-      setError(err.message || 'Failed to login');
+    } catch (err: Error | unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to login');
       setIsLoading(false);
     }
   };

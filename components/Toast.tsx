@@ -25,9 +25,11 @@ export default function Toast({
       setIsShowing(true);
       const timer = setTimeout(() => {
         setIsShowing(false);
-        setTimeout(() => {
-          onClose && onClose();
-        }, 300); // Wait for fade out animation
+        if (onClose) {
+          setTimeout(() => {
+            onClose();
+          }, 300); // Wait for fade out animation
+        }
       }, duration);
       
       return () => clearTimeout(timer);

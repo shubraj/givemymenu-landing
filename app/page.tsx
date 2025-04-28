@@ -61,14 +61,15 @@ export default function Home() {
       // Success toast
       setToast({
         visible: true,
-        message: data.message || 'Thank you! You\'re on the early access list.',
+        message: data.message || 'Thank you! You&apos;re on the early access list.',
         type: 'success'
       });
       
       // Reset form (but keep email for display purposes)
       // Don't hide success message since we want it to persist
       
-    } catch (error) {
+    } catch (err) {
+      console.error('Error logging out:', err);
       setToast({
         visible: true,
         message: 'Something went wrong. Please try again.',
@@ -217,7 +218,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900 dark:text-white">QR Code Generation</h3>
                 <p className="text-gray-600 dark:text-gray-300 text-sm md:text-base">
-                  Instantly generate custom QR codes that link directly to your restaurant's menu.
+                  Instantly generate custom QR codes that link directly to your restaurant&apos;s menu.
                 </p>
               </div>
               
@@ -256,7 +257,7 @@ export default function Home() {
                   </div>
                   <h3 className="text-lg font-medium text-green-800 dark:text-green-200 mb-2">Thank You!</h3>
                   <p className="text-green-700 dark:text-green-300">
-                    We've received your email ({email}) and will notify you as soon as we launch.
+                    We&apos;ve received your email ({email}) and will notify you as soon as we launch.
                   </p>
                 </div>
               ) : (
@@ -279,8 +280,8 @@ export default function Home() {
                   </button>
                 </form>
               )}
-              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-3">
-                We respect your privacy. Unsubscribe at any time.
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
+                We&apos;ll respect your privacy. Unsubscribe at any time.
               </p>
             </div>
           </div>

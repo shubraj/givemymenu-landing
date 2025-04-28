@@ -41,13 +41,16 @@ export async function POST(request: Request) {
     );
     
     // Set HTTP-only cookie
-    cookies().set({
+    const cookieStore = await cookies();
+    cookieStore.set({
       name: 'admin_token',
       value: token,
       httpOnly: true,
-      path: '/',
-      maxAge: 60 * 60 * 24, // 24 hours
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
+      path: '/',
+      // Expires in 24 hours
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
     });
     
     return NextResponse.json(

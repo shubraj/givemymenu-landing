@@ -1,7 +1,21 @@
 import mysql from 'mysql2/promise';
+import bcrypt from 'bcryptjs';
+
+interface Subscriber {
+  id: number;
+  email: string;
+  created_at: string;
+}
+
+interface AdminUser {
+  id: number;
+  username: string;
+  password: string;
+  created_at: string;
+}
 
 // MySQL connection pool - only initialize in server components, not edge runtime
-let pool: any;
+let pool: mysql.Pool | undefined;
 
 // Initialize pool if not in edge runtime
 if (typeof process !== 'undefined' && process.env.NEXT_RUNTIME !== 'edge') {
@@ -31,7 +45,7 @@ export async function initDB() {
 
   try {
     // Create subscribers table if it doesn't exist
-    await pool.query(`
+    await pool?.query(`
       CREATE TABLE IF NOT EXISTS subscribers (
         id INT AUTO_INCREMENT PRIMARY KEY,
         email VARCHAR(255) NOT NULL UNIQUE,
@@ -40,7 +54,7 @@ export async function initDB() {
     `);
     
     // Create admin users table if it doesn't exist
-    await pool.query(`
+    await pool?.query(`
       CREATE TABLE IF NOT EXISTS admin_users (
         id INT AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(255) NOT NULL UNIQUE,
@@ -52,17 +66,14 @@ export async function initDB() {
     console.log('Database initialized successfully');
     
     // Check if default admin exists
-    const [admins] = await pool.query('SELECT * FROM admin_users');
-    const adminsArray = admins as any[];
+    const [admins] = await pool?.query('SELECT * FROM admin_users') || [[]];
+    const adminsArray = admins as AdminUser[];
     
     if (adminsArray.length === 0) {
-      // Import bcrypt for hashing
-      const bcrypt = require('bcryptjs');
-      
       // Create default admin (username: admin, password: givemymenu)
       const hashedPassword = await bcrypt.hash('givemymenu', 10);
       
-      await pool.query(
+      await pool?.query(
         'INSERT INTO admin_users (username, password) VALUES (?, ?)',
         ['admin', hashedPassword]
       );
@@ -76,7 +87,7 @@ export async function initDB() {
 }
 
 // Execute DB query - check for edge runtime first
-export async function query(sql: string, params?: any[]) {
+export async function query(sql: string, params?: unknown[]) {
   // Handle edge runtime gracefully
   if (typeof process !== 'undefined' && process.env.NEXT_RUNTIME === 'edge') {
     console.warn('MySQL queries not supported in edge runtime');
@@ -84,7 +95,7 @@ export async function query(sql: string, params?: any[]) {
   }
 
   try {
-    const [results] = await pool.query(sql, params);
+    const [results] = await pool?.query(sql, params) || [[]];
     return results;
   } catch (error) {
     console.error('Database query error:', error);
@@ -116,7 +127,7 @@ export async function addSubscriber(email: string) {
 export async function getSubscribers() {
   try {
     const subscribers = await query('SELECT * FROM subscribers ORDER BY created_at DESC');
-    return subscribers;
+    return subscribers as Subscriber[];
   } catch (error) {
     console.error('Error getting subscribers:', error);
     throw error;
@@ -126,10 +137,8 @@ export async function getSubscribers() {
 // Verify admin credentials
 export async function verifyAdmin(username: string, password: string) {
   try {
-    const bcrypt = require('bcryptjs');
-    
     const users = await query('SELECT * FROM admin_users WHERE username = ?', [username]);
-    const usersArray = users as any[];
+    const usersArray = users as AdminUser[];
     
     if (usersArray.length === 0) {
       return null;

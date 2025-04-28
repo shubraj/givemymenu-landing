@@ -37,8 +37,8 @@ export default function AdminDashboard() {
         }
 
         setSubscribers(data.data);
-      } catch (err: any) {
-        setError(err.message || 'An error occurred');
+      } catch (err: Error | unknown) {
+        setError(err instanceof Error ? err.message : 'An error occurred');
       } finally {
         setIsLoading(false);
       }
